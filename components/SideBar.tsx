@@ -6,6 +6,17 @@ import {
   BsPersonFill,
 } from 'react-icons/bs'
 
+import { signOut } from "firebase/auth";
+import { auth } from '../pages/api/firebase'
+
+const logout = async () => {
+  try {
+    signOut(auth)
+  } catch(e) {
+    console.log(String(e));
+  }
+}
+
 const SideBar = () => {
   return (
     <div
@@ -25,6 +36,7 @@ const SideBar = () => {
 
       <Divider />
       <SideBarIconDanger
+        onClick={logout}
         icon={<BsLockFill size="20" />}
         text="ออกจากระบบ"
         navTo="/"
