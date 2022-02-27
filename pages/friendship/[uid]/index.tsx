@@ -1,13 +1,25 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import SideBar from '../../components/SideBar'
+import { useEffect, useState } from 'react'
+import SideBar from '../../../components/SideBar'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
   const { uid } = router.query
-  console.log(uid)
-  return (
+  const [valid, setValid] = useState(0)
+  useEffect(() => {
+    fetch('http://localhost:3000/api/validuid?uid=' + uid)
+      .then((res) => res.json())
+      .then((data) => {
+        setValid(data['data'])
+      })
+    return () => {
+      setValid(0)
+    }
+  }, [uid])
+
+  return valid ? (
     <div className="main-bg">
       <Head>
         <title>Friendship | UTD108</title>
@@ -15,9 +27,13 @@ const FriendShipDetails: NextPage = () => {
       <SideBar />
       <div className="flex min-h-screen flex-col items-center justify-center py-2 font-display">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-          <h1 className="text-4xl">Message Page</h1>
+          <h1 className="text-4xl">Write Page</h1>
         </main>
       </div>
+    </div>
+  ) : (
+    <div>
+      Invalid
     </div>
   )
 }

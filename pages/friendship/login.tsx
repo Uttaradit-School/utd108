@@ -17,8 +17,29 @@ const FriendShipAuth: NextPage = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result)
       const token = credential ? credential.accessToken : null
       const user = result.user
-      console.log(credential, token, user)
-      Router.push('/friendship/details')
+      try {
+        const payload = JSON.stringify({
+          gmail: user['email'],
+          uid: user['uid'],
+        })
+
+        const genid = await fetch('http://localhost:3000/api/genuid', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: payload,
+        })
+        const fetched = await genid.json()
+        if (genid.status == 200) {
+          console.log(fetched)
+          Router.push('/friendship/details')
+        } else {
+          throw fetched['message']
+        }
+      } catch (e) {
+        throw e
+      }
     } catch (e) {
       return console.log(String(e))
     }
