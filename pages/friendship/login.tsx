@@ -49,7 +49,7 @@ const FriendShipAuth: NextPage = () => {
     <div className="main-bg">
       <div className="flex min-h-screen flex-col items-center justify-center py-2 font-display">
         <Head>
-          <title>เข้าสู่ระบบ | UTD108</title>
+          <title>Login | UTD108</title>
         </Head>
 
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
