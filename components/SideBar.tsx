@@ -1,19 +1,18 @@
 import Link from 'next/link'
 import {
   BsFillChatLeftTextFill,
-  BsFillLightningFill,
   BsLockFill,
   BsPersonFill,
 } from 'react-icons/bs'
 
-import { signOut } from "firebase/auth";
+import { signOut } from 'firebase/auth'
 import { auth } from '../pages/api/firebase'
 
 const logout = async () => {
   try {
     signOut(auth)
-  } catch(e) {
-    console.log(String(e));
+  } catch (e) {
+    console.log(String(e))
   }
 }
 

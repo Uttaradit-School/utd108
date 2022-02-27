@@ -1,11 +1,9 @@
 import type { NextPage } from 'next'
 import Router from 'next/router'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 
-
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../api/firebase'
 
 const FriendShipAuth: NextPage = () => {
@@ -13,17 +11,16 @@ const FriendShipAuth: NextPage = () => {
     const provider = new GoogleAuthProvider()
     try {
       const result = await signInWithPopup(auth, provider)
-      if(!result){
+      if (!result) {
         throw 'Login failed'
       }
       const credential = GoogleAuthProvider.credentialFromResult(result)
-      const token = credential ? credential.accessToken: null
+      const token = credential ? credential.accessToken : null
       const user = result.user
-      console.log(credential, token, user);
+      console.log(credential, token, user)
       Router.push('/friendship/details')
-      
-    } catch(e){
-      return console.log(String(e));
+    } catch (e) {
+      return console.log(String(e))
     }
   }
 
