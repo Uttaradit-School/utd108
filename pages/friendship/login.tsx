@@ -23,7 +23,7 @@ const FriendShipAuth: NextPage = () => {
           uid: user['uid'],
         })
 
-        const genid = await fetch('http://localhost:3000/api/genuid', {
+        const genid = await fetch('/api/genuid', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
