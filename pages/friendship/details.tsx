@@ -50,12 +50,16 @@ const FriendShipDetails: NextPage = () => {
               </div>
             </a>
           </div>
-          <button className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
-            <Link href="/friendship/message">อ่าน Friendship</Link>
-          </button>
-          <button className="mt-3 w-80 rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
-            <div onClick={logout}>ออกจากระบบ</div>
-          </button>
+          <Link href="/friendship/message">
+            <button className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
+              อ่าน Friendship
+            </button>
+          </Link>
+          <div onClick={logout}>
+            <button className="mt-3 w-80 rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
+              ออกจากระบบ
+            </button>
+          </div>
         </main>
       </div>
     </div>
