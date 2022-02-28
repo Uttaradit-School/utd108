@@ -46,7 +46,7 @@ const FriendShipDetails: NextPage = () => {
               }
             >
               <div className="inline-flex select-none rounded-lg bg-slate-800 px-6 py-4 text-center font-sans text-sm font-semibold text-slate-200 shadow-lg ring-0 ring-slate-900/5 duration-300 ease-in-out hover:scale-105">
-                https://utd108.vercel.app/friendship/xxxxxxxx
+                https://utd108.social/friendship/xxxxxxxx
               </div>
             </a>
           </div>
