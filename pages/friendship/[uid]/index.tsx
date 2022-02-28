@@ -8,7 +8,7 @@ const FriendShipDetails: NextPage = () => {
   const { uid } = router.query
   const [valid, setValid] = useState(0)
   useEffect(() => {
-    fetch('http://localhost:3000/api/validuid?uid=' + uid)
+    fetch('/api/validuid?uid=' + uid)
       .then((res) => res.json())
       .then((data) => {
         setValid(data['data'])
