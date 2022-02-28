@@ -50,6 +50,21 @@ const FriendShipDetails: NextPage = () => {
               </div>
             </a>
           </div>
+          <div className="mt-3 mb-4 flex w-full items-center justify-center">
+            <h1 className="text-md mt-2 mr-4">ชื่อ: </h1>
+            <input
+              type="text"
+              name="author"
+              maxLength={16}
+              className="w-30 mt-2 rounded-full border p-2
+            text-center text-xs caret-pink-500 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
+              placeholder="Your nickname"
+              required
+            ></input>
+            <button className="w-30 ml-2 mt-2 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
+              บันทึก
+            </button>
+          </div>
           <Link href="/friendship/message">
             <button className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
               อ่าน Friendship
