@@ -31,7 +31,7 @@ const FriendShipDetails: NextPage = () => {
     try {
       await navigator.clipboard.writeText(copyMe)
       setCopySuccess('Copied!')
-      console.log('Copied!')
+      console.log('✔ Copied')
     } catch (err) {
       console.log('🤦‍♂️ Failed to copy!')
     }
