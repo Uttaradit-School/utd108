@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { FaCircleNotch, FaUserTimes } from 'react-icons/fa'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
@@ -25,10 +26,23 @@ const FriendShipDetails: NextPage = () => {
   }, [router.isReady])
 
   if (loading) {
-    return <div>Loading</div>
+    return (
+      <div className="fixed h-screen w-screen items-center justify-center bg-white font-display opacity-75">
+        <span className="flex h-screen w-screen items-center justify-center text-blue-500 opacity-75">
+          <FaCircleNotch className="animate-spin" size={60} />
+        </span>
+      </div>
+    )
   }
   if (!valid && !loading) {
-    return <div>Invalid</div>
+    return (
+      <div className="fixed h-screen w-screen items-center justify-center bg-white font-display opacity-75">
+        <span className="flex h-screen w-screen items-center justify-center text-red-600 opacity-75">
+          <FaUserTimes size={60} />
+          ไม่พบผู้ใช้นี้น้าา~!
+        </span>
+      </div>
+    )
   }
 
   return (
