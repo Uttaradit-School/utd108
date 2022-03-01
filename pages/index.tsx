@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +19,7 @@ const Home: NextPage = () => {
           <p className="mt-3 text-2xl">It's been a long journey..</p>
 
           <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-            <Link href="/friendship/login">
+            <Link href="/friendship/login" >
               <a className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600">
                 <h3 className="text-2xl font-bold">Friendship &rarr;</h3>
                 <p className="mt-4 text-xl">ร่วมเขียนความทรงจำของกันและกัน</p>

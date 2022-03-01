@@ -33,7 +33,10 @@ const FriendShipAuth: NextPage = () => {
         const fetched = await genid.json()
         if (genid.status == 200) {
           console.log(fetched)
-          Router.push('/friendship/details')
+          Router.push({
+            pathname: '/friendship/details',
+            query: { slug: fetched['refid'] },
+          })
         } else {
           throw fetched['message']
         }

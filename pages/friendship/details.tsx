@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 
 import { signOut } from 'firebase/auth'
 import { auth } from '../../pages/api/firebase'
+import { useRouter } from 'next/router'
 
 const FriendShipDetails: NextPage = () => {
+  const router = useRouter()
+  const { slug } = router.query
+
   const logout = async () => {
     try {
       signOut(auth)
@@ -14,6 +18,12 @@ const FriendShipDetails: NextPage = () => {
       console.log(String(e))
     }
   }
+  
+  useEffect(() => {
+    if (slug == undefined) {
+      router.push('/friendship/login')
+    }
+  }, [slug])
 
   const [copySuccess, setCopySuccess] = useState('')
 
@@ -46,7 +56,8 @@ const FriendShipDetails: NextPage = () => {
               }
             >
               <div className="inline-flex select-none rounded-lg bg-slate-800 px-6 py-4 text-center font-sans text-sm font-semibold text-slate-200 shadow-lg ring-0 ring-slate-900/5 duration-300 ease-in-out hover:scale-105">
-                https://utd108.vercel.app/friendship/xxxxxxxx
+                {'https://utd108.vercel.app/friendship/' +
+                  (router.isReady ? slug : 'xxxxxx')}
               </div>
             </a>
           </div>
@@ -65,7 +76,7 @@ const FriendShipDetails: NextPage = () => {
               บันทึก
             </button>
           </div>
-          <Link href="/friendship/message">
+          <Link href={'/friendship/message?slug=' + slug}>
             <button className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
               อ่าน Friendship
             </button>

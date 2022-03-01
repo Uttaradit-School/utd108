@@ -5,20 +5,33 @@ import { useEffect, useState } from 'react'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
-  const { uid } = router.query
-  const [valid, setValid] = useState(0)
-  useEffect(() => {
-    fetch('/api/validuid?uid=' + uid)
-      .then((res) => res.json())
-      .then((data) => {
-        setValid(data['data'])
-      })
-    return () => {
-      setValid(0)
-    }
-  }, [uid])
 
-  return valid ? (
+  const { uid } = router.query
+  const [valid, setValid] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async (uid: string) => {
+      const res = await fetch('/api/validuid?uid=' + uid)
+      const data = await res.json()
+      setValid(Boolean(data['data']))
+      setLoading(false)
+      console.log(valid, loading)
+    }
+    if (router.isReady) {
+      setLoading(true)
+      fetchData(String(uid))
+    }
+  }, [router.isReady])
+
+  if (loading) {
+    return <div>Loading</div>
+  }
+  if (!valid && !loading) {
+    return <div>Invalid</div>
+  }
+
+  return (
     <div className="main-bg">
       <Head>
         <title>Friendship | UTD108</title>
@@ -32,7 +45,7 @@ const FriendShipDetails: NextPage = () => {
               name="message"
               rows={8}
               className="text-md w-80 resize-none rounded-md
-              p-3 caret-pink-500 shadow-sm ring-1 ring-slate-900/10 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
+                p-3 caret-pink-500 shadow-sm ring-1 ring-slate-900/10 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
             ></textarea>
           </div>
           <div className="flex w-full items-center justify-center">
@@ -42,7 +55,7 @@ const FriendShipDetails: NextPage = () => {
               name="author"
               maxLength={16}
               className="mt-2 w-40 rounded p-2 text-center
-            text-xs caret-pink-500 ring-0 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
+                text-xs caret-pink-500 ring-0 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="ชื่อของคุณ"
             ></input>
           </div>
@@ -55,8 +68,6 @@ const FriendShipDetails: NextPage = () => {
         </main>
       </div>
     </div>
-  ) : (
-    <div>Invalid</div>
   )
 }
 
