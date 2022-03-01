@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
-  const { slug } = router.query
+  const { slug, uid } = router.query
 
   const [nickname, setNickname] = useState('')
 
@@ -44,6 +44,13 @@ const FriendShipDetails: NextPage = () => {
   }, [slug])
 
   const [copySuccess, setCopySuccess] = useState('')
+
+  const friendshipHandler = (e:any) => {
+    router.push({
+      pathname: '/friendship/message',
+      query: { slug, uid }
+    }, '/friendship/message')
+  }
 
   const nicknameHandler = (e: any) => {
     setNickname(e.target.value)
@@ -124,11 +131,12 @@ const FriendShipDetails: NextPage = () => {
               บันทึก
             </button>
           </div>
-          <Link href={'/friendship/message?slug=' + slug}>
-            <button className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
-              อ่าน Friendship
-            </button>
-          </Link>
+          <button
+            className="mt-3 w-80 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105"
+            onClick={friendshipHandler}
+          >
+            อ่าน Friendship
+          </button>
           <div onClick={logout}>
             <button className="mt-3 w-80 rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
               ออกจากระบบ
