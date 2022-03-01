@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
-import { auth } from '../api/firebase'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
@@ -44,6 +43,8 @@ const FriendShipDetails: NextPage = () => {
     const fetchData = async () => {
       const res = await fetch('/api/getmessages?slug=' + slug)
       if (res.status === 404) {
+        console.log('by fetched')
+
         router.push('/friendship/login')
       }
       const data = await res.json()
@@ -107,7 +108,7 @@ const FriendShipDetails: NextPage = () => {
               </li>
             </ul>
           </nav>
-          <Link href="/friendship/details">
+          <Link href={'/friendship/details?slug=' + slug}>
             <button className="mt-10 w-40 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
               กลับ
             </button>
