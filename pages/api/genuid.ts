@@ -28,6 +28,7 @@ export default async function handler(
         gmail: req.body['gmail'],
         uid: req.body['uid'],
         messages: [],
+        nickname: ''
       }
       await setDoc(doc(db, 'member', refid), docData)
     } else {

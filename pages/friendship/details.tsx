@@ -3,13 +3,15 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { signOut } from 'firebase/auth'
+import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../pages/api/firebase'
 import { useRouter } from 'next/router'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
   const { slug } = router.query
+
+  const [nickname, setNickname] = useState('')
 
   const logout = async () => {
     try {
@@ -20,12 +22,53 @@ const FriendShipDetails: NextPage = () => {
   }
 
   useEffect(() => {
-    if (slug == undefined) {
-      router.push('/friendship/login')
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/getNickname?slug=' + slug)
+        const data = await res.json()
+        setNickname(data['data'])
+      } catch (e) {
+        console.log(String(e))
+      }
+    }
+
+    if (router.isReady) {
+      onAuthStateChanged(auth, (user) => {
+        if (!user || slug == undefined) {
+          router.push('/friendship/login')
+        } else {
+          fetchData()
+        }
+      })
     }
   }, [slug])
 
   const [copySuccess, setCopySuccess] = useState('')
+
+  const nicknameHandler = (e: any) => {
+    setNickname(e.target.value)
+  }
+
+  const postNickname = async () => {
+    try {
+      const res = await fetch(
+        `/api/setNickname?slug=${slug}&nickname=${nickname}`,
+        {
+          method: 'POST',
+        }
+      )
+      const data = await res.json()
+      if (data['data'] == nickname) {
+        console.log('Done 😘')
+      }
+    } catch (e) {
+      console.log(String(e))
+    }
+  }
+
+  const submitHandler = (e: any) => {
+    postNickname()
+  }
 
   const copyToClipBoard = async (copyMe: any) => {
     try {
@@ -67,12 +110,17 @@ const FriendShipDetails: NextPage = () => {
               type="text"
               name="author"
               maxLength={16}
+              value={nickname}
               className="w-30 mt-2 rounded-full border p-2
             text-center text-xs caret-pink-500 transition ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Your nickname"
               required
+              onChange={nicknameHandler}
             ></input>
-            <button className="w-30 ml-2 mt-2 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
+            <button
+              className="w-30 ml-2 mt-2 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105"
+              onClick={submitHandler}
+            >
               บันทึก
             </button>
           </div>
