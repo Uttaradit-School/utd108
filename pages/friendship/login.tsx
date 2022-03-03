@@ -34,7 +34,6 @@ const FriendShipAuth: NextPage = () => {
         if (genid.status == 200) {
           window.localStorage.setItem('uid', user['uid'])
           window.localStorage.setItem('slug', fetched['refid'])
-          window.localStorage.setItem('nickname', fetched['nickname'])
           Router.push('/friendship/details')
         } else {
           throw fetched['message']
