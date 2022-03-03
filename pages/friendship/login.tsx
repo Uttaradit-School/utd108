@@ -58,12 +58,10 @@ const FriendShipAuth: NextPage = () => {
           <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
             <a
               onClick={login}
-              className="mt-6 w-64 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+              className="w-100 mt-6 flex items-center rounded-xl border p-6 text-center hover:text-blue-600 focus:text-blue-600"
             >
               <FcGoogle size="40" />
-              <h3 className="mt-2 text-2xl font-bold">
-                เข้าสู่ระบบด้วย Google &rarr;
-              </h3>
+              <span className="ml-4"> เข้าสู่ระบบด้วย Google &rarr;</span>
             </a>
           </div>
         </main>
