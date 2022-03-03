@@ -65,9 +65,9 @@ const FriendShipDetails: NextPage = () => {
   const postNickname = async () => {
     try {
       const storage_slug = slug || window.localStorage.getItem('slug')
-      const storage_uid = uid || window.localStorage.getItem('uid')
+      const storage_nickname = nickname || window.localStorage.getItem('nickname')
       const res = await fetch(
-        `/api/setNickname?slug=${storage_slug}&nickname=${storage_uid}`,
+        `/api/setNickname?slug=${storage_slug}&nickname=${storage_nickname}`,
         {
           method: 'POST',
         }
