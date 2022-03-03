@@ -34,7 +34,6 @@ const FriendShipDetails: NextPage = () => {
     if (router.isReady) {
       const storage_slug = slug || window.localStorage.getItem('slug')
       const storage_uid = uid || window.localStorage.getItem('uid')
-      const storage_nickname = window.localStorage.getItem('nickname')
       onAuthStateChanged(auth, (user) => {
         if (user) {
           if (
@@ -65,8 +64,10 @@ const FriendShipDetails: NextPage = () => {
 
   const postNickname = async () => {
     try {
+      const storage_slug = slug || window.localStorage.getItem('slug')
+      const storage_uid = uid || window.localStorage.getItem('uid')
       const res = await fetch(
-        `/api/setNickname?slug=${slug}&nickname=${nickname}`,
+        `/api/setNickname?slug=${storage_slug}&nickname=${storage_uid}`,
         {
           method: 'POST',
         }
