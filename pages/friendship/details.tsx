@@ -42,11 +42,7 @@ const FriendShipDetails: NextPage = () => {
             storage_uid != undefined &&
             storage_uid == user.uid
           ) {
-            if (storage_nickname) {
-              setNickname(storage_nickname)
-            } else {
-              fetchData(String(storage_slug))
-            }
+            fetchData(String(storage_slug))
           } else {
             router.push('/friendship/login')
           }
