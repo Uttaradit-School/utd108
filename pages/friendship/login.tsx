@@ -55,10 +55,10 @@ const FriendShipAuth: NextPage = () => {
 
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
           <h1 className="text-4xl">UTD Friendship</h1>
-          <div className="mt-6 flex max-w-4xl cursor-pointer flex-wrap items-center justify-around sm:w-full">
+          <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
             <a
               onClick={login}
-              className="w-100 flex items-center rounded-xl border p-6 text-center hover:text-blue-600 focus:text-blue-600"
+              className="w-100 flex cursor-pointer items-center rounded-xl border p-6 text-center hover:text-blue-600 focus:text-blue-600"
             >
               <FcGoogle size="40" />
               <span className="ml-4"> เข้าสู่ระบบด้วย Google &rarr;</span>
