@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Router from 'next/router'
 import Head from 'next/head'
-import Link from 'next/link'
 
+import { FcGoogle } from 'react-icons/fc'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../api/firebase'
 
@@ -63,7 +63,8 @@ const FriendShipAuth: NextPage = () => {
               onClick={login}
               className="mt-6 w-64 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
             >
-              <h3 className="text-2xl font-bold">
+              <FcGoogle size="40" />
+              <h3 className="mt-2 text-2xl font-bold">
                 เข้าสู่ระบบด้วย Google &rarr;
               </h3>
             </a>
