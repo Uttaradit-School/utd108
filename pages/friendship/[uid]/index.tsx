@@ -17,11 +17,9 @@ const FriendShipDetails: NextPage = () => {
 
   const messageHandler = (e: any) => {
     setMessage(e.target.value)
-    console.log(message)
   }
   const senderHandler = (e: any) => {
     setSender(e.target.value)
-    console.log(sender)
   }
 
   const submitHandler = async (e: any) => {
@@ -45,7 +43,6 @@ const FriendShipDetails: NextPage = () => {
     }
     setMessage('')
     setSender('')
-    console.log('Done 😎')
     router.push('/friendship/done')
   }
 

@@ -25,6 +25,7 @@ const FriendShipDetails: NextPage = () => {
         const res = await fetch('/api/getNickname?slug=' + slug)
         const data = await res.json()
         setNickname(data['data'])
+        window.localStorage.setItem('nickname', data['data'])
       } catch (e) {
         console.log(String(e))
       }
@@ -33,6 +34,7 @@ const FriendShipDetails: NextPage = () => {
     if (router.isReady) {
       const storage_slug = slug || window.localStorage.getItem('slug')
       const storage_uid = uid || window.localStorage.getItem('uid')
+      const storage_nickname = window.localStorage.getItem('nickname')
       onAuthStateChanged(auth, (user) => {
         if (user) {
           if (
@@ -40,7 +42,11 @@ const FriendShipDetails: NextPage = () => {
             storage_uid != undefined &&
             storage_uid == user.uid
           ) {
-            fetchData(String(storage_slug))
+            if (storage_nickname) {
+              setNickname(storage_nickname)
+            } else {
+              fetchData(String(storage_slug))
+            }
           } else {
             router.push('/friendship/login')
           }
@@ -70,9 +76,6 @@ const FriendShipDetails: NextPage = () => {
         }
       )
       const data = await res.json()
-      if (data['data'] == nickname) {
-        console.log('Done 😘')
-      }
     } catch (e) {
       console.log(String(e))
     }
