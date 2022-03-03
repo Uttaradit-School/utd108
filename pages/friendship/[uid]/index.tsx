@@ -45,7 +45,8 @@ const FriendShipDetails: NextPage = () => {
     }
     setMessage('')
     setSender('')
-    return console.log('Done 😎')
+    console.log('Done 😎')
+    router.push('/friendship/done')
   }
 
   useEffect(() => {
