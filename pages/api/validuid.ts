@@ -12,5 +12,12 @@ export default async function handler(
   if (!docSnap.exists()) {
     return res.status(404).json({ message: 'Not found 😅', data: 0 })
   }
-  return res.status(200).json({ message: 'found 😎', data: 1 })
+  const data = docSnap.data()
+  return res
+    .status(200)
+    .json({
+      message: 'found 😎',
+      data: 1,
+      nickname: data['nickname'] === '' ? data['gmail'] : data['nickname'],
+    })
 }

@@ -1,13 +1,15 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../api/firebase'
 
 const FriendShipDetails: NextPage = () => {
   const router = useRouter()
-  const { slug } = router.query
+  let { slug, uid } = router.query
+
   const [messages, setMessages] = useState<{
     gmail: string
     uid: string
@@ -27,6 +29,10 @@ const FriendShipDetails: NextPage = () => {
   })
   const [index, setIndex] = useState(0)
 
+  const backHandler = (e: any) => {
+    router.push('/friendship/details')
+  }
+
   const forwardClick = (e: any) => {
     setIndex((index + 1) % messages.messages.length)
   }
@@ -40,11 +46,9 @@ const FriendShipDetails: NextPage = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (slug: string) => {
       const res = await fetch('/api/getmessages?slug=' + slug)
       if (res.status === 404) {
-        console.log('by fetched')
-
         router.push('/friendship/login')
       }
       const data = await res.json()
@@ -52,11 +56,20 @@ const FriendShipDetails: NextPage = () => {
     }
 
     if (router.isReady) {
-      if (slug == undefined) {
+      const storage_slug = slug || window.localStorage.getItem('slug')
+      const storage_uid = uid || window.localStorage.getItem('uid')
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (
+            storage_slug != undefined &&
+            storage_uid != undefined &&
+            storage_uid == user.uid
+          ) {
+            return fetchData(String(storage_slug))
+          }
+        }
         router.push('/friendship/login')
-      }
-
-      fetchData()
+      })
     }
   }, [slug])
 
@@ -72,10 +85,16 @@ const FriendShipDetails: NextPage = () => {
               {messages && (
                 <div className="space-y-2 p-6 2xl:p-8">
                   <p className="text-sm leading-6 text-slate-600">
-                    {messages.messages[index].message}
+                    {
+                      messages.messages[messages.messages.length - index - 1]
+                        .message
+                    }
                   </p>
                   <div className="text-right text-sm font-medium italic leading-6 text-pink-400 duration-300 ease-in-out hover:text-pink-600">
-                    {messages.messages[index].sender}
+                    {
+                      messages.messages[messages.messages.length - index - 1]
+                        .sender
+                    }
                   </div>
                 </div>
               )}
@@ -108,11 +127,13 @@ const FriendShipDetails: NextPage = () => {
               </li>
             </ul>
           </nav>
-          <Link href={'/friendship/details?slug=' + slug}>
-            <button className="mt-10 w-40 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105">
-              กลับ
-            </button>
-          </Link>
+
+          <button
+            className="mt-10 w-40 rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm duration-300 ease-in-out hover:scale-105"
+            onClick={backHandler}
+          >
+            กลับ
+          </button>
         </div>
       </div>
     </div>

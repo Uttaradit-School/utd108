@@ -17,7 +17,12 @@ export default async function handler(
     }
     const result = docSnap.data()
 
-    return res.status(200).json({ message: 'found 😎', data: result['nickname'] })
+    return res
+      .status(200)
+      .json({
+        message: 'found 😎',
+        data: result['nickname'] == '' ? result['gmail'] : result['nickname'],
+      })
   } catch (e) {
     return res.status(500).json({ message: String(e) })
   }

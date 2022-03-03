@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Link from 'next/link'
 
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../pages/api/firebase'
@@ -12,7 +11,6 @@ const FriendShipDetails: NextPage = () => {
   const { slug, uid } = router.query
 
   const [nickname, setNickname] = useState('')
-
   const logout = async () => {
     try {
       signOut(auth)
@@ -22,7 +20,7 @@ const FriendShipDetails: NextPage = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (slug: string) => {
       try {
         const res = await fetch('/api/getNickname?slug=' + slug)
         const data = await res.json()
@@ -33,11 +31,21 @@ const FriendShipDetails: NextPage = () => {
     }
 
     if (router.isReady) {
+      const storage_slug = slug || window.localStorage.getItem('slug')
+      const storage_uid = uid || window.localStorage.getItem('uid')
       onAuthStateChanged(auth, (user) => {
-        if (!user || slug == undefined) {
-          router.push('/friendship/login')
+        if (user) {
+          if (
+            storage_slug != undefined &&
+            storage_uid != undefined &&
+            storage_uid == user.uid
+          ) {
+            fetchData(String(storage_slug))
+          } else {
+            router.push('/friendship/login')
+          }
         } else {
-          fetchData()
+          router.push('/friendship/login')
         }
       })
     }
@@ -45,11 +53,8 @@ const FriendShipDetails: NextPage = () => {
 
   const [copySuccess, setCopySuccess] = useState('')
 
-  const friendshipHandler = (e:any) => {
-    router.push({
-      pathname: '/friendship/message',
-      query: { slug, uid }
-    }, '/friendship/message')
+  const friendshipHandler = (e: any) => {
+    router.push('/friendship/message')
   }
 
   const nicknameHandler = (e: any) => {
@@ -104,13 +109,21 @@ const FriendShipDetails: NextPage = () => {
               onClick={() =>
                 copyToClipBoard(
                   'https://utd108.social/friendship/' +
-                    (router.isReady ? slug : 'xxxxxx')
+                    (router.isReady
+                      ? slug != undefined
+                        ? slug
+                        : window.localStorage.getItem('slug')
+                      : 'xxxxxx')
                 )
               }
             >
               <div className="inline-flex select-none rounded-lg bg-slate-800 px-6 py-4 text-center font-sans text-sm font-semibold text-slate-200 shadow-lg ring-0 ring-slate-900/5 duration-300 ease-in-out hover:scale-105">
                 {'https://utd108.social/friendship/' +
-                  (router.isReady ? slug : 'xxxxxx')}
+                  (router.isReady
+                    ? slug != undefined
+                      ? slug
+                      : window.localStorage.getItem('slug')
+                    : 'xxxxxx')}
               </div>
             </a>
           </div>
