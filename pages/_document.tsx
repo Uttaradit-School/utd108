@@ -12,7 +12,7 @@ export default function Document() {
         />
         <meta
           property="og:image"
-          content="https://www.liveabout.com/thmb/fxGnjPVpRlFfpGnl26UW4GyBnSQ=/1411x1411/smart/filters:no_upscale()/cat-giving-finger-590355133df78c5456e78839.jpg"
+          content="https://utd.ac.th/main/wp-content/uploads/2018/05/new_utd-logo-300x300.png"
         />
       </Head>
       <body>
