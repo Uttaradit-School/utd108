@@ -65,7 +65,8 @@ const FriendShipDetails: NextPage = () => {
   const postNickname = async () => {
     try {
       const storage_slug = slug || window.localStorage.getItem('slug')
-      const storage_nickname = nickname || window.localStorage.getItem('nickname')
+      const storage_nickname =
+        nickname || window.localStorage.getItem('nickname')
       const res = await fetch(
         `/api/setNickname?slug=${storage_slug}&nickname=${storage_nickname}`,
         {
@@ -108,7 +109,7 @@ const FriendShipDetails: NextPage = () => {
               className="cursor-pointer"
               onClick={() =>
                 copyToClipBoard(
-                  'https://utd108.social/friendship/' +
+                  'https://utd108.vercel.app/friendship/' +
                     (router.isReady
                       ? slug != undefined
                         ? slug
@@ -118,7 +119,7 @@ const FriendShipDetails: NextPage = () => {
               }
             >
               <div className="inline-flex select-none rounded-lg bg-slate-800 px-6 py-4 text-center font-sans text-sm font-semibold text-slate-200 shadow-lg ring-0 ring-slate-900/5 duration-300 ease-in-out hover:scale-105">
-                {'https://utd108.social/friendship/' +
+                {'https://utd108.vercel.app/friendship/' +
                   (router.isReady
                     ? slug != undefined
                       ? slug
